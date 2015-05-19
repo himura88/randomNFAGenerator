@@ -8,6 +8,7 @@ int main() {
 
     StreamGenerator * myStream;
     myStream = new StreamGenerator();
+    //dynamic_bitset<>* stream;
 
     dynamic_bitset<> foo = myStream->generateBitStream((256));
     std::cout << "foo:  " << foo << std::endl;

@@ -21,8 +21,7 @@ StreamGenerator::StreamGenerator() {
 }
 
 
-dynamic_bitset<> StreamGenerator::generateBitStream(int size)
-{
+dynamic_bitset<> StreamGenerator::generateBitStream(int size) {
 
     dynamic_bitset<> randomBitStream(size);
 
@@ -39,8 +38,7 @@ dynamic_bitset<> StreamGenerator::generateBitStream(int size)
     std::uniform_int_distribution<unsigned int> distribution(0, UINT_MAX);
 
 
-    for (int i = 0; i <= iterations; i++)
-    {
+    for (int i = 0; i <= iterations; i++) {
         unsigned int tempRandomInt = distribution(generator);
         setBitstreamBits(randomBitStream, tempRandomInt, startIndex, 0);
         startIndex = startIndex + sizeOfInteger;
@@ -50,8 +48,8 @@ dynamic_bitset<> StreamGenerator::generateBitStream(int size)
 
 }
 
-void StreamGenerator::setBitstreamBits(dynamic_bitset<>& bitStream, int num, size_t bitsetIndex, size_t numIndex)
-{
+void StreamGenerator::setBitstreamBits(dynamic_bitset<>& bitStream,
+                                       int num, size_t bitsetIndex, size_t numIndex) {
 
     unsigned int size = sizeof (unsigned int)*8;
     if (numIndex < size) {
@@ -61,20 +59,19 @@ void StreamGenerator::setBitstreamBits(dynamic_bitset<>& bitStream, int num, siz
             setBitstreamBits(bitStream, num, bitsetIndex + 1, numIndex + 1);
         }
     }
+
+
 }
 
 
-const dynamic_bitset<> &StreamGenerator::getDefaultBitStream() const
-{
+const dynamic_bitset<> &StreamGenerator::getDefaultBitStream() const {
     return defaultBitStream;
 }
 
-void StreamGenerator::setDefaultBitStream(const dynamic_bitset<> &defaultBitStream)
-{
+void StreamGenerator::setDefaultBitStream(const dynamic_bitset<> &defaultBitStream) {
     StreamGenerator::defaultBitStream = defaultBitStream;
 }
 
-int StreamGenerator::getStreamSize() const
-{
+int StreamGenerator::getStreamSize() const {
     return streamSize;
 }
