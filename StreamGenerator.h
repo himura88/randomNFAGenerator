@@ -27,6 +27,7 @@ class StreamGenerator {
 private:
 
     int streamSize;
+    dynamic_bitset<> defaultBitStream;
 public:
 
 
@@ -40,7 +41,7 @@ public:
 
     void setDefaultBitStream(const dynamic_bitset<> &defaultBitStream);
 
-    dynamic_bitset<> defaultBitStream;
+
 
     StreamGenerator(int streamSize, dynamic_bitset<> defaultBitStream); //param constructor
 
