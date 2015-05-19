@@ -6,7 +6,7 @@
  */
 
 #ifndef UNIFORMRANDOMNFAGENERATOR_H
-#define	UNIFORMRANDOMNFAGENERATOR_H
+#define    UNIFORMRANDOMNFAGENERATOR_H
 
 #include <climits>
 #include <string>
@@ -24,23 +24,35 @@ using namespace boost;
 
 class StreamGenerator {
 
-
-public:
+private:
 
     int streamSize;
+public:
+
+
+    int getStreamSize() const;
+
+    void setStreamSize(int streamSize) {
+        StreamGenerator::streamSize = streamSize;
+    }
+
+    const dynamic_bitset<> &getDefaultBitStream() const;
+
+    void setDefaultBitStream(const dynamic_bitset<> &defaultBitStream);
+
     dynamic_bitset<> defaultBitStream;
 
     StreamGenerator(int streamSize, dynamic_bitset<> defaultBitStream); //param constructor
 
-    StreamGenerator(const StreamGenerator& orig);
+    StreamGenerator(const StreamGenerator &orig);
 
     StreamGenerator();
 
 
+    dynamic_bitset<> generateBitStream(
+            int size); //option 1, using a method with no return type to fill the string vector that contains the bit representation of the generated random number in each position
 
-    dynamic_bitset<>  generateBitStream(int size); //option 1, using a method with no return type to fill the string vector that contains the bit representation of the generated random number in each position
-
-    void setBitstreamBits(dynamic_bitset<>& bitStream, int num,
+    void setBitstreamBits(dynamic_bitset<> &bitStream, int num,
                           size_t bitsetIndex,
                           size_t numIndex);
 
