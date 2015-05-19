@@ -10,14 +10,20 @@
 
 using namespace std;
 
-StreamGenerator::StreamGenerator(int size, dynamic_bitset<> defaultBitStream) {
+StreamGenerator::StreamGenerator(int size, dynamic_bitset<>* defaultBitStream) {
     this->streamSize = size;
     this->defaultBitStream = defaultBitStream;
 }
 
 StreamGenerator::StreamGenerator() {
     this->streamSize = 0;
-    this->defaultBitStream = dynamic_bitset<>(streamSize);
+    this->defaultBitStream = new dynamic_bitset<>(streamSize);
+}
+
+StreamGenerator::StreamGenerator(int streamSize)
+{
+    this->streamSize = streamSize;
+    this->defaultBitStream = new dynamic_bitset<>(streamSize);
 }
 
 
@@ -64,14 +70,40 @@ void StreamGenerator::setBitstreamBits(dynamic_bitset<>& bitStream,
 }
 
 
-const dynamic_bitset<> &StreamGenerator::getDefaultBitStream() const {
+int StreamGenerator::getStreamSize() const {
+    return streamSize;
+}
+
+dynamic_bitset<> StreamGenerator::generateBitStream() {
+
+   // dynamic_bitset<> randomBitStream(this->streamSize);
+
+    //As size of an integer is implementation dependant on C++
+    //Using sizeof(int)*8 will give the exact number of bits of an integer
+    //depending on the platform in which the program is running.
+    unsigned int sizeOfInteger = sizeof (int)*8;
+    unsigned int iterations = (ceil(this->streamSize/ sizeOfInteger));
+    unsigned int startIndex = 0;
+
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<unsigned int> distribution(0, UINT_MAX);
+
+
+    for (int i = 0; i <= iterations; i++) {
+        unsigned int tempRandomInt = distribution(generator);
+        setBitstreamBits(*this->defaultBitStream, tempRandomInt, startIndex, 0);
+        startIndex = startIndex + sizeOfInteger;
+    }
+
+    return *this->defaultBitStream;
+}
+
+dynamic_bitset<> *StreamGenerator::getDefaultBitStream() const {
     return defaultBitStream;
 }
 
-void StreamGenerator::setDefaultBitStream(const dynamic_bitset<> &defaultBitStream) {
+void StreamGenerator::setDefaultBitStream(dynamic_bitset<> *defaultBitStream) {
     StreamGenerator::defaultBitStream = defaultBitStream;
-}
-
-int StreamGenerator::getStreamSize() const {
-    return streamSize;
 }

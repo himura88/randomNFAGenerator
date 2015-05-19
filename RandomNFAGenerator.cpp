@@ -4,6 +4,7 @@
 
 #include "RandomNFAGenerator.h"
 RandomNFAGenerator::RandomNFAGenerator() {
+    this->generator = new StreamGenerator();
 }
 
 RandomNFAGenerator::RandomNFAGenerator(const RandomNFAGenerator& orig) {
@@ -21,18 +22,31 @@ const dynamic_bitset<> &RandomNFAGenerator::getFinalStates() const {
     return finalStates;
 }
 
-void RandomNFAGenerator::setNfaTransitionTables(vector<dynamic_bitset<>> *nfaTransitionTables) {
-    RandomNFAGenerator::nfaTransitionTables = nfaTransitionTables;
-}
+
 
 void RandomNFAGenerator::setGenerator(StreamGenerator *generator) {
     RandomNFAGenerator::generator = generator;
 }
 
-vector<dynamic_bitset<>> *RandomNFAGenerator::getNfaTransitionTables() const {
-    return nfaTransitionTables;
-}
 
 void RandomNFAGenerator::setInitialStates(const dynamic_bitset<> &initialStates) {
     RandomNFAGenerator::initialStates = initialStates;
+}
+
+std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomNFAs(unsigned sizeOfAlphabet,
+                                                                                    unsigned numberOfStates,
+                                                                                    unsigned numberOfNFAs)
+{
+
+    unsigned transitionTableSize = sizeOfAlphabet*(numberOfStates*numberOfStates);
+    for (int i = 0; i <= numberOfNFAs; i++)
+    {
+        dynamic_bitset<> currentNFA = generator->generateBitStream(transitionTableSize);
+        this->nfaTransitionTables.push_back(currentNFA);
+        //std::cout << "currentNFA:" << currentNFA << std::endl;
+       // nfaTransitionTables.push_back(push_backcurrentNFA);
+
+        std::cout << i << "-currentNFA:" << currentNFA << std::endl;
+    }
+    return nfaTransitionTables;
 }
