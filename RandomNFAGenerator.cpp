@@ -50,3 +50,19 @@ std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomN
     }
     return nfaTransitionTables;
 }
+
+
+std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomNFAs()
+{
+    return this->generateUniformRandomNFAs(this->alphabet,this->states,this->numberOfNFAs);
+}
+
+void RandomNFAGenerator::setNumberOfNFAs(unsigned int numberOfNFAs)
+{
+    RandomNFAGenerator::numberOfNFAs = numberOfNFAs;
+}
+
+unsigned int RandomNFAGenerator::getNumberOfNFAs() const
+{
+    return numberOfNFAs;
+}

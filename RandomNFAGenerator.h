@@ -30,7 +30,13 @@ private:
     StreamGenerator *generator;
     unsigned int alphabet;
     unsigned int states;
+    unsigned int numberOfNFAs;
 
+
+public:
+    unsigned int getNumberOfNFAs() const;
+
+    void setNumberOfNFAs(unsigned int numberOfNFAs);
 
 public:
     const dynamic_bitset<> &getInitialStates() const
@@ -77,6 +83,9 @@ public:
 
     std::vector<boost::dynamic_bitset<>> &generateUniformRandomNFAs(unsigned sizeOfAlphabet, unsigned numberOfStates,
                                                                     unsigned numberOfNFAs);
+
+    std::vector<boost::dynamic_bitset<>> &generateUniformRandomNFAs();
+
 
 };
 

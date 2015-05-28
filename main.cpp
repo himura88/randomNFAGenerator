@@ -23,8 +23,14 @@ int main(int argc, char *argv[])
     numStates >> states;
     numNFAs >> numberOfNFAs;
 
-    automataGenerator->generateUniformRandomNFAs(alphabet, states, numberOfNFAs);
-    myStream = new StreamGenerator();
+    automataGenerator->setAlphabet(alphabet);
+    automataGenerator->setStates(states);
+    automataGenerator->setNumberOfNFAs(numberOfNFAs);
+    automataGenerator->generateUniformRandomNFAs();
+
+    //automataGenerator->generateUniformRandomNFAs(alphabet, states, numberOfNFAs);
+   // automataGenerator->generateUniformRandomNFAs(alphabet, states, numberOfNFAs);
+   // myStream = new StreamGenerator();
 
     //StreamGenerator *soo;
     //soo = new StreamGenerator(502);
