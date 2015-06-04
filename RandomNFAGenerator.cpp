@@ -3,66 +3,61 @@
 //
 
 #include "RandomNFAGenerator.h"
-RandomNFAGenerator::RandomNFAGenerator() {
+
+RandomNFAGenerator::RandomNFAGenerator()
+{
     this->generator = new StreamGenerator();
 }
 
-RandomNFAGenerator::RandomNFAGenerator(const RandomNFAGenerator& orig) {
+RandomNFAGenerator::RandomNFAGenerator(const RandomNFAGenerator &orig)
+{
 }
 
-RandomNFAGenerator::~RandomNFAGenerator() {
-}
-
-
-void RandomNFAGenerator::setFinalStates(const dynamic_bitset<> &finalStates) {
-    RandomNFAGenerator::finalStates = finalStates;
-}
-
-const dynamic_bitset<> &RandomNFAGenerator::getFinalStates() const {
-    return finalStates;
+RandomNFAGenerator::~RandomNFAGenerator()
+{
 }
 
 
-
-void RandomNFAGenerator::setGenerator(StreamGenerator *generator) {
+void RandomNFAGenerator::setGenerator(StreamGenerator *generator)
+{
     RandomNFAGenerator::generator = generator;
 }
 
-
-void RandomNFAGenerator::setInitialStates(const dynamic_bitset<> &initialStates) {
-    RandomNFAGenerator::initialStates = initialStates;
-}
 
 std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomNFAs(unsigned sizeOfAlphabet,
                                                                                     unsigned numberOfStates,
                                                                                     unsigned numberOfNFAs)
 {
 
-    unsigned transitionTableSize = sizeOfAlphabet*(numberOfStates*numberOfStates);
+    unsigned transitionTableSize = sizeOfAlphabet * (numberOfStates * numberOfStates);
     for (int i = 0; i <= numberOfNFAs; i++)
     {
         dynamic_bitset<> currentNFA = generator->generateBitStream(transitionTableSize);
-        this->nfaTransitionTables.push_back(currentNFA);
-        //std::cout << "currentNFA:" << currentNFA << std::endl;
-       // nfaTransitionTables.push_back(push_backcurrentNFA);
+        dynamic_bitset<> finalStates = generator->generateBitStream(transitionTableSize);
 
-        std::cout << i << "-currentNFA:" << currentNFA << std::endl;
+        this->generated_NFAs.push_back(currentNFA);
+        this->generated_NFAs_final_states.push_back(finalStates);
+
+        //std::cout << "currentNFA:" << currentNFA << std::endl;
+        // generated_NFAs.push_back(push_backcurrentNFA);
+
+        //std::cout << i << "-currentNFA:" << currentNFA << std::endl;
     }
-    return nfaTransitionTables;
+    return generated_NFAs;
 }
 
 
 std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomNFAs()
 {
-    return this->generateUniformRandomNFAs(this->alphabet,this->states,this->numberOfNFAs);
+    return this->generateUniformRandomNFAs(this->alphabet, this->states, this->number_of_NFAs);
 }
 
 void RandomNFAGenerator::setNumberOfNFAs(unsigned int numberOfNFAs)
 {
-    RandomNFAGenerator::numberOfNFAs = numberOfNFAs;
+    RandomNFAGenerator::number_of_NFAs = numberOfNFAs;
 }
 
 unsigned int RandomNFAGenerator::getNumberOfNFAs() const
 {
-    return numberOfNFAs;
+    return number_of_NFAs;
 }

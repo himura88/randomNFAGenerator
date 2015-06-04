@@ -24,13 +24,14 @@ public:
 
 
 private:
-    dynamic_bitset<> initialStates;
-    dynamic_bitset<> finalStates;
-    vector<boost::dynamic_bitset<>> nfaTransitionTables;
+
+    vector<boost::dynamic_bitset<>> generated_NFAs;
+    vector<boost::dynamic_bitset<>> generated_NFAs_final_states;
+
     StreamGenerator *generator;
     unsigned int alphabet;
     unsigned int states;
-    unsigned int numberOfNFAs;
+    unsigned int number_of_NFAs;
 
 
 public:
@@ -39,17 +40,8 @@ public:
     void setNumberOfNFAs(unsigned int numberOfNFAs);
 
 public:
-    const dynamic_bitset<> &getInitialStates() const
-    {
-        return initialStates;
-    }
 
-    void setInitialStates(const dynamic_bitset<> &initialStates);
 
-    unsigned int getStates() const
-    {
-        return states;
-    }
 
     void setStates(unsigned int states)
     {
