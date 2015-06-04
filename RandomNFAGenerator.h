@@ -1,5 +1,5 @@
 //
-// Created by hassingard on 5/18/15.
+// Created by Carlos David on 5/18/15.
 //
 
 #ifndef UNIFORMRANDOMNFAGENERATOR_RANDOMNFAGENERATOR_H
@@ -27,51 +27,38 @@ private:
 
     vector<boost::dynamic_bitset<>> generated_NFAs;
     vector<boost::dynamic_bitset<>> generated_NFAs_final_states;
-
     StreamGenerator *generator;
     unsigned int alphabet;
     unsigned int states;
     unsigned int number_of_NFAs;
 
-
-public:
-    unsigned int getNumberOfNFAs() const;
-
-    void setNumberOfNFAs(unsigned int numberOfNFAs);
-
 public:
 
 
+    const vector<dynamic_bitset<>> &getGenerated_NFAs() const;
 
-    void setStates(unsigned int states)
-    {
-        RandomNFAGenerator::states = states;
-    }
+    void setGenerated_NFAs(const vector<dynamic_bitset<>> &generated_NFAs);
 
-    unsigned int getAlphabet() const
-    {
-        return alphabet;
-    }
+    const vector<dynamic_bitset<>> &getGenerated_NFAs_final_states() const;
 
-    void setAlphabet(unsigned int alphabet)
-    {
-        RandomNFAGenerator::alphabet = alphabet;
-    }
-
-    StreamGenerator *getGenerator() const
-    {
-        return generator;
-    }
+    void setGenerated_NFAs_final_states(
+            const vector<dynamic_bitset<>> &generated_NFAs_final_states);
 
     void setGenerator(StreamGenerator *generator);
 
-    vector<dynamic_bitset<>> *getNfaTransitionTables() const;
+    unsigned int getStates() const;
 
-    void setNfaTransitionTables(vector<dynamic_bitset<>> *nfaTransitionTables);
+    unsigned int getNumber_of_NFAs() const;
 
-    const dynamic_bitset<> &getFinalStates() const;
+    void setNumber_of_NFAs(unsigned int number_of_NFAs);
 
-    void setFinalStates(const dynamic_bitset<> &finalStates);
+    void setStates(unsigned int states);
+
+    unsigned int getAlphabet() const;
+
+    void setAlphabet(unsigned int alphabet);
+
+    StreamGenerator *getGenerator() const;
 
     std::vector<boost::dynamic_bitset<>> &generateUniformRandomNFAs(unsigned sizeOfAlphabet, unsigned numberOfStates,
                                                                     unsigned numberOfNFAs);

@@ -37,9 +37,7 @@ public:
 
     StreamGenerator(int streamSize);
 
-    void setStreamSize(int streamSize) {
-        StreamGenerator::streamSize = streamSize;
-    }
+    void setStreamSize(int streamSize);
 
 
     StreamGenerator(int streamSize, dynamic_bitset<>* defaultBitStream); //param constructor

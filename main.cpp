@@ -8,8 +8,8 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-    RandomNFAGenerator *automataGenerator;
-    automataGenerator = new RandomNFAGenerator();
+    RandomNFAGenerator *automata_generator;
+    automata_generator = new RandomNFAGenerator();
 
     unsigned alphabet, states, numberOfNFAs;
 
@@ -21,10 +21,10 @@ int main(int argc, char *argv[])
     numStates >> states;
     numNFAs >> numberOfNFAs;
 
-    automataGenerator->setAlphabet(alphabet);
-    automataGenerator->setStates(states);
-    automataGenerator->setNumberOfNFAs(numberOfNFAs);
-    automataGenerator->generateUniformRandomNFAs();
+    automata_generator->setAlphabet(alphabet);
+    automata_generator->setStates(states);
+    automata_generator->setNumber_of_NFAs(numberOfNFAs);
+    automata_generator->generateUniformRandomNFAs();
 
     return 0;
 }

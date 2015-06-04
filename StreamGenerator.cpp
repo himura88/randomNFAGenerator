@@ -76,7 +76,6 @@ int StreamGenerator::getStreamSize() const {
 
 dynamic_bitset<> StreamGenerator::generateBitStream() {
 
-   // dynamic_bitset<> randomBitStream(this->streamSize);
 
     //As size of an integer is implementation dependant on C++
     //Using sizeof(int)*8 will give the exact number of bits of an integer
@@ -106,4 +105,9 @@ dynamic_bitset<> *StreamGenerator::getDefaultBitStream() const {
 
 void StreamGenerator::setDefaultBitStream(dynamic_bitset<> *defaultBitStream) {
     StreamGenerator::defaultBitStream = defaultBitStream;
+}
+
+void StreamGenerator::setStreamSize(int streamSize)
+{
+    StreamGenerator::streamSize = streamSize;
 }
