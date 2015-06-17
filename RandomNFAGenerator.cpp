@@ -2,6 +2,7 @@
 // Created by Carlos David on 5/18/15.
 //
 
+#include <fstream>
 #include "RandomNFAGenerator.h"
 
 RandomNFAGenerator::RandomNFAGenerator()
@@ -27,7 +28,7 @@ std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomN
     for (int i = 0; i <= numberOfNFAs; i++)
     {
         dynamic_bitset<> currentNFA = generator->generateBitStream(transitionTableSize);
-        dynamic_bitset<> finalStates = generator->generateBitStream(transitionTableSize);
+        dynamic_bitset<> finalStates = generator->generateBitStream(transitionTableSize);//change this to use the number of states
 
         this->generated_NFAs.push_back(currentNFA);
         this->generated_NFAs_final_states.push_back(finalStates);
@@ -103,4 +104,17 @@ void RandomNFAGenerator::setAlphabet(unsigned int alphabet)
 StreamGenerator *RandomNFAGenerator::getGenerator() const
 {
     return generator;
+}
+
+void RandomNFAGenerator::writeNFA()
+{
+    ofstream myfile ("example.txt");
+    if (myfile.is_open())
+    {
+        myfile << "This is a line.\n";
+        myfile << "This is another line.\n";
+        myfile.close();
+    }
+    else cout << "Unable to open file";
+
 }

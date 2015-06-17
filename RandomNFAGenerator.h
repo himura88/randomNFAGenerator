@@ -13,16 +13,6 @@ class RandomNFAGenerator
 {
 
 
-public:
-    RandomNFAGenerator(StreamGenerator *generator, unsigned int alphabet, unsigned int states);
-
-    RandomNFAGenerator();
-
-    RandomNFAGenerator(const RandomNFAGenerator &orig);
-
-    virtual ~RandomNFAGenerator();
-
-
 private:
 
     vector<boost::dynamic_bitset<>> generated_NFAs;
@@ -34,6 +24,13 @@ private:
 
 public:
 
+    RandomNFAGenerator(StreamGenerator *generator, unsigned int alphabet, unsigned int states);
+
+    RandomNFAGenerator();
+
+    RandomNFAGenerator(const RandomNFAGenerator &orig);
+
+    virtual ~RandomNFAGenerator();
 
     const vector<dynamic_bitset<>> &getGenerated_NFAs() const;
 
@@ -64,6 +61,8 @@ public:
                                                                     unsigned numberOfNFAs);
 
     std::vector<boost::dynamic_bitset<>> &generateUniformRandomNFAs();
+
+    void writeNFA();
 
 
 };
