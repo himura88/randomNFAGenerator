@@ -62,7 +62,7 @@ public:
 
     std::vector<boost::dynamic_bitset<>> &generateUniformRandomNFAs();
 
-    void writeNFA();
+    void writeNFA(vector<boost::dynamic_bitset<>> generated_NFAs);
 
 
 };

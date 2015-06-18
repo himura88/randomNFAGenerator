@@ -26,5 +26,7 @@ int main(int argc, char *argv[])
     automata_generator->setNumber_of_NFAs(numberOfNFAs);
     automata_generator->generateUniformRandomNFAs();
 
+    automata_generator->writeNFA(automata_generator->getGenerated_NFAs());
+
     return 0;
 }

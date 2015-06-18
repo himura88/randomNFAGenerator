@@ -25,7 +25,7 @@ std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomN
 {
 
     unsigned transitionTableSize = sizeOfAlphabet * (numberOfStates * numberOfStates);
-    for (int i = 0; i <= numberOfNFAs; i++)
+    for (int i = 0; i <= numberOfNFAs - 1; i++)
     {
         dynamic_bitset<> currentNFA = generator->generateBitStream(transitionTableSize);
         dynamic_bitset<> finalStates = generator->generateBitStream(transitionTableSize);//change this to use the number of states
@@ -106,15 +106,49 @@ StreamGenerator *RandomNFAGenerator::getGenerator() const
     return generator;
 }
 
-void RandomNFAGenerator::writeNFA()
-{
-    ofstream myfile ("example.txt");
-    if (myfile.is_open())
-    {
-        myfile << "This is a line.\n";
-        myfile << "This is another line.\n";
-        myfile.close();
-    }
-    else cout << "Unable to open file";
 
+void RandomNFAGenerator::writeNFA(vector<boost::dynamic_bitset<>> generated_NFAs)
+{
+
+
+    ofstream myfile ("/home/hassingard/Desktop/example3.txt");
+    size_t index = 0;
+    size_t number_of_states = getStates() - 1 ;
+    size_t size_of_alphabet = getAlphabet() - 1;
+    size_t nfa_vector_size = generated_NFAs.size();
+
+
+
+
+
+
+
+        dynamic_bitset<> myBitset = generated_NFAs.at(1);
+        for (size_t i = 0; i <= number_of_states; i++)
+        {
+            for (size_t j = 0; j <= number_of_states; j++)
+            {
+                for (size_t k = 0; k <= size_of_alphabet; k++)
+                {
+                    if (myBitset.test(index))
+                    {
+                        //std::cout << "BIT IS 1*****" << std::endl;
+                        myfile << i + 1 << " " << k + 1 << " " << j + 1 << "\n";
+
+                    }
+                    else
+                    {
+                        // std::cout << "BIT IS 0*****" << std::endl;
+                    }
+
+                    index += 1;
+                }
+            }
+        }
+
+        myfile << "\n";
+        myfile << "\n";
+        myfile << "\n";
+
+    myfile.close();
 }
