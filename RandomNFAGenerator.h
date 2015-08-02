@@ -24,10 +24,6 @@ private:
 
 
 
-
-
-
-
 public:
 
     RandomNFAGenerator(StreamGenerator *generator, unsigned int alphabet, unsigned int states);
@@ -65,13 +61,11 @@ public:
 
     std::vector<boost::dynamic_bitset<>> &generateUniformRandomNFAs();
 
-    void writeNFA(vector<boost::dynamic_bitset<>> generated_NFAs);
+    void write_generated_NFAs(vector<boost::dynamic_bitset<>> generated_NFAs);
 
     unsigned int getNfa_stream_size() const;
 
     std::string  get_final_states_int_rep(int pos_n) const;
-
-
 
 };
 

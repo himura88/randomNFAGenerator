@@ -32,8 +32,6 @@ std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomN
         this->generated_NFAs.push_back(currentNFA);
         this->generated_NFAs_final_states.push_back(finalStates);
 
-
-        std::cout << i << "-currentNFA:" << currentNFA << std::endl;
     }
     return generated_NFAs;
 }
@@ -103,7 +101,7 @@ StreamGenerator *RandomNFAGenerator::getGenerator() const
 
 
 
-void RandomNFAGenerator::writeNFA(vector<boost::dynamic_bitset<>> generated_NFAs)
+void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> generated_NFAs)
 {
 
 
@@ -123,16 +121,14 @@ void RandomNFAGenerator::writeNFA(vector<boost::dynamic_bitset<>> generated_NFAs
         generated_nfa_desc_file << alphabet << ",";
     }
 
-    generated_nfa_desc_file << "}" << "\n" << "\n";
+    generated_nfa_desc_file << "}"  << "\n";
 
     generated_nfa_desc_file << "# Numero de estados" << "\n" << number_of_states << "\n";
-
-    generated_nfa_desc_file << "# Estados iniciales" << "\n" << 1 << "\n";
-
 
 
     for (size_t nfa_vector_index = 0; nfa_vector_index <= nfa_vector_size; nfa_vector_index++)
     {
+        generated_nfa_desc_file << "# Estados iniciales" << "\n" << 1 << "\n";
         generated_nfa_desc_file << "# Estados finales" << "\n" << get_final_states_int_rep(nfa_vector_index) << "\n";
         generated_nfa_desc_file << "# Descripcion de las transiciones" << "\n";
 
@@ -164,7 +160,6 @@ void RandomNFAGenerator::writeNFA(vector<boost::dynamic_bitset<>> generated_NFAs
         }
 
         generated_nfa_desc_file << "\n";
-        generated_nfa_desc_file << "\n";
 
     }
 
@@ -181,7 +176,7 @@ unsigned int RandomNFAGenerator::getNfa_stream_size() const
 
 string RandomNFAGenerator::get_final_states_int_rep(int pos_n) const
 {
-    std::string foo;
+    std::string nfa_states_list;
     dynamic_bitset<> final_states_current_nfa_bit_stream = this->getGenerated_NFAs_final_states().at(pos_n);
 
     for (int i = 0; i < getStates(); i ++)
@@ -190,10 +185,10 @@ string RandomNFAGenerator::get_final_states_int_rep(int pos_n) const
         if (final_states_current_nfa_bit_stream.test(i))
         {
 
-            foo += std::to_string(i + 1);
-            foo += " ";
+            nfa_states_list += std::to_string(i + 1);
+            nfa_states_list += " ";
         }
     }
 
-    return foo;
+    return nfa_states_list;
 }
