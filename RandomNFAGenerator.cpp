@@ -22,12 +22,15 @@ RandomNFAGenerator::RandomNFAGenerator()
 RandomNFAGenerator::RandomNFAGenerator(const RandomNFAGenerator &orig)
 {
 }
-
+//Class default constructor
 RandomNFAGenerator::~RandomNFAGenerator()
 {
 }
 
-
+/*
+ * Function that generates a vector of boost::dynamic_bitset that are going to be
+ * interpreted as randomly generated NFAs.
+ */
 std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomNFAs()
 {
 
