@@ -50,8 +50,6 @@ public:
     dynamic_bitset<> generateBitStream(
             int size); //option 1, using a method with no return type to fill the string vector that contains the bit representation of the generated random number in each position
 
-    dynamic_bitset<> generateBitStream();
-
     void setBitstreamBits(dynamic_bitset<> &bitStream, int num,
                           size_t bitsetIndex,
                           size_t numIndex);

@@ -74,31 +74,6 @@ int StreamGenerator::getStreamSize() const {
     return streamSize;
 }
 
-dynamic_bitset<> StreamGenerator::generateBitStream() {
-
-
-    //As size of an integer is implementation dependant on C++
-    //Using sizeof(int)*8 will give the exact number of bits of an integer
-    //depending on the platform in which the program is running.
-    unsigned int sizeOfInteger = sizeof (int)*8;
-    unsigned int iterations = (ceil(this->streamSize/ sizeOfInteger));
-    unsigned int startIndex = 0;
-
-
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator(seed);
-    std::uniform_int_distribution<unsigned int> distribution(0, UINT_MAX);
-
-
-    for (int i = 0; i <= iterations; i++) {
-        unsigned int tempRandomInt = distribution(generator);
-        setBitstreamBits(*this->defaultBitStream, tempRandomInt, startIndex, 0);
-        startIndex = startIndex + sizeOfInteger;
-    }
-
-    return *this->defaultBitStream;
-}
-
 dynamic_bitset<> *StreamGenerator::getDefaultBitStream() const {
     return defaultBitStream;
 }

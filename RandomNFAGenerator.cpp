@@ -5,6 +5,13 @@
 #include <fstream>
 #include <sstream>
 #include "RandomNFAGenerator.h"
+#define DEFAULT_COMMA ","
+#define OPEN_CURLY_BRACKET "{"
+#define CLOSE_CURLY_BRACKET "}"
+#define LINE_BREAK "\n"
+#define START_STATE "1"
+
+
 
 RandomNFAGenerator::RandomNFAGenerator()
 {
@@ -105,9 +112,15 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
 {
 
 
+    std::string header_nfa_desc;
+
+
+    header_nfa_desc.append("# Alfabeto");
+    header_nfa_desc.append(LINE_BREAK);;
+    header_nfa_desc.append(OPEN_CURLY_BRACKET);
+
     ofstream generated_nfa_desc_file("/home/hassingard/Desktop/example3.txt");
 
-    generated_nfa_desc_file << "# Alfabeto" << "\n" << "{";
 
 
     size_t nfa_bit_stream_index = 0;
@@ -118,18 +131,34 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
 
     for (size_t alphabet = 1; alphabet <= size_of_alphabet; alphabet++)
     {
-        generated_nfa_desc_file << alphabet << ",";
+
+        header_nfa_desc.append(std::to_string(alphabet));
+        header_nfa_desc.append(DEFAULT_COMMA);
     }
 
-    generated_nfa_desc_file << "}"  << "\n";
+    header_nfa_desc.erase(header_nfa_desc.size()-1);
+    header_nfa_desc.append(CLOSE_CURLY_BRACKET);
+    header_nfa_desc.append(LINE_BREAK);
+    header_nfa_desc.append("# Numero de estados");
+    header_nfa_desc.append(LINE_BREAK);
+    header_nfa_desc.append(std::to_string(number_of_states));
+    header_nfa_desc.append(LINE_BREAK);
 
-    generated_nfa_desc_file << "# Numero de estados" << "\n" << number_of_states << "\n";
+
+    header_nfa_desc.append("# Estados iniciales");
+    header_nfa_desc.append(LINE_BREAK);
+    header_nfa_desc.append(START_STATE);
+    header_nfa_desc.append(LINE_BREAK);
 
 
+    /*
+     * Outer cycle used to iterate over the whole list of generated bitstreams (Each bitstream/position of the vector
+     * is going to be interpreted/read as an NFA)
+     */
     for (size_t nfa_vector_index = 0; nfa_vector_index <= nfa_vector_size; nfa_vector_index++)
     {
-        generated_nfa_desc_file << "# Estados iniciales" << "\n" << 1 << "\n";
-        generated_nfa_desc_file << "# Estados finales" << "\n" << get_final_states_int_rep(nfa_vector_index) << "\n";
+        generated_nfa_desc_file << header_nfa_desc;
+        generated_nfa_desc_file << "# Estados finales" << LINE_BREAK << get_final_states_int_rep(nfa_vector_index) << LINE_BREAK;
         generated_nfa_desc_file << "# Descripcion de las transiciones" << "\n";
 
 
@@ -146,7 +175,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
                     if (current_nfa.test(nfa_bit_stream_index))
                     {
 
-                        generated_nfa_desc_file << i + 1 << " " << k + 1 << " " << j + 1 << "\n";
+                        generated_nfa_desc_file << i + 1 << " " << k + 1 << " " << j + 1 << LINE_BREAK;
                     }
 
                     nfa_bit_stream_index += 1;
@@ -159,7 +188,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
 
         }
 
-        generated_nfa_desc_file << "\n";
+        generated_nfa_desc_file << LINE_BREAK;
 
     }
 
