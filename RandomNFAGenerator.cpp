@@ -10,6 +10,7 @@
 #define CLOSE_CURLY_BRACKET "}"
 #define LINE_BREAK "\n"
 #define START_STATE "1"
+#define SPACE " "
 
 
 
@@ -107,12 +108,15 @@ StreamGenerator *RandomNFAGenerator::getGenerator() const
 }
 
 
-
+/**
+ * Function that takes a vector of boost::dynamic_bitset and write a text filed reading each bitset
+ * as an NFA
+ */
 void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> generated_NFAs)
 {
 
 
-    std::string header_nfa_desc;
+    std::string header_nfa_desc; //variable used to add header information to each NFA (#initial state and alphabet symbols
 
 
     header_nfa_desc.append("# Alfabeto");
@@ -123,15 +127,15 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
 
 
 
-    size_t nfa_bit_stream_index = 0;
-    size_t number_of_states = getStates();
-    size_t size_of_alphabet = getAlphabet();
-    size_t nfa_vector_size = generated_NFAs.size() - 1;
-    size_t nfa_bit_stream_size = getNfa_stream_size();
+    size_t nfa_bit_stream_index = 0; //index used in the iteration of each bitstream.
+    size_t number_of_states = getStates(); //number of states that each NFA has
+    size_t size_of_alphabet = getAlphabet();//number of symbols of the alphabet of the NFA
+    size_t nfa_vector_size = generated_NFAs.size() - 1; //Count the number of generated NFAs
+    size_t nfa_bit_stream_size = getNfa_stream_size();//Size of the generated bitstream that represents a single NFA
 
+    //Adding the symbols of the alphabet as a list {1,...,n}
     for (size_t alphabet = 1; alphabet <= size_of_alphabet; alphabet++)
     {
-
         header_nfa_desc.append(std::to_string(alphabet));
         header_nfa_desc.append(DEFAULT_COMMA);
     }
@@ -159,10 +163,17 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
     {
         generated_nfa_desc_file << header_nfa_desc;
         generated_nfa_desc_file << "# Estados finales" << LINE_BREAK << get_final_states_int_rep(nfa_vector_index) << LINE_BREAK;
-        generated_nfa_desc_file << "# Descripcion de las transiciones" << "\n";
+        generated_nfa_desc_file << "# Descripcion de las transiciones" << LINE_BREAK;
 
 
         dynamic_bitset<> current_nfa = generated_NFAs.at(nfa_vector_index);
+        /*
+         * The following set of loops are used to read the NFA transition table from the bitstreams.
+         * The first one is iterating through the starting states (This means, the states from which each transition
+         * is going to depart). The second one is reading the arriving states and the third one is reading the
+         * alphabet symbols which labels the transition.
+         */
+
         for (size_t i = 0; i < number_of_states; i++)
         {
             for (size_t j = 0; j < number_of_states; j++)
@@ -174,8 +185,12 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
                     std::cout << "nfa_bit_stream_index:" << nfa_bit_stream_index << std::endl;
                     if (current_nfa.test(nfa_bit_stream_index))
                     {
+                        /*
+                         * if entering here, that means that it is a none zero occurrence of a bit
+                         * thus, a transition exists from i to j and labeled by k
+                         */
 
-                        generated_nfa_desc_file << i + 1 << " " << k + 1 << " " << j + 1 << LINE_BREAK;
+                        generated_nfa_desc_file << i + 1 << SPACE << k + 1 << SPACE << j + 1 << LINE_BREAK;
                     }
 
                     nfa_bit_stream_index += 1;
@@ -215,7 +230,7 @@ string RandomNFAGenerator::get_final_states_int_rep(int pos_n) const
         {
 
             nfa_states_list += std::to_string(i + 1);
-            nfa_states_list += " ";
+            nfa_states_list += SPACE;
         }
     }
 
