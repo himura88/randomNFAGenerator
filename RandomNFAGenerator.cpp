@@ -123,6 +123,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
     std::string header_nfa_desc; //variable used to add header information to each NFA (#initial state and alphabet symbols
 
 
+
     header_nfa_desc.append("# Alfabeto");
     header_nfa_desc.append(LINE_BREAK);;
     header_nfa_desc.append(OPEN_CURLY_BRACKET);
@@ -170,6 +171,9 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
         generated_nfa_desc_file << header_nfa_desc;
         generated_nfa_desc_file << "# Estados finales" << LINE_BREAK << get_final_states_int_rep(nfa_vector_index) << LINE_BREAK;
         generated_nfa_desc_file << "# Descripcion de las transiciones" << LINE_BREAK;
+        std::string body_nfa_desc; //variable used to build the body of each generated NFA (i.e the transition table of the generated NFAs)
+        size_t nfa_number_of_transitions = 0;
+
 
 
         dynamic_bitset<> current_nfa = generated_NFAs.at(nfa_vector_index);
@@ -196,7 +200,15 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
                          * thus, a transition exists from i to j and labeled by k
                          */
 
-                        generated_nfa_desc_file << i + 1 << SPACE << k + 1 << SPACE << j + 1 << LINE_BREAK;
+                        nfa_number_of_transitions += 1;
+                        body_nfa_desc.append(std::to_string(i + 1));
+                        body_nfa_desc.append(SPACE);
+                        body_nfa_desc.append(std::to_string(k + 1));
+                        body_nfa_desc.append(SPACE);
+                        body_nfa_desc.append(std::to_string(j + 1));
+                        body_nfa_desc.append(LINE_BREAK);
+
+                       // generated_nfa_desc_file << i + 1 << SPACE << k + 1 << SPACE << j + 1 << LINE_BREAK;
                     }
 
                     nfa_bit_stream_index += 1;
@@ -209,7 +221,9 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
 
         }
 
-        generated_nfa_desc_file << LINE_BREAK;
+        generated_nfa_desc_file << std::to_string(nfa_number_of_transitions) << LINE_BREAK << body_nfa_desc << LINE_BREAK;
+
+        //generated_nfa_desc_file << LINE_BREAK;
 
     }
 
