@@ -10,6 +10,7 @@
 #define CLOSE_CURLY_BRACKET "}"
 #define LINE_BREAK "\n"
 #define START_STATE "1"
+#define NUMBER_OF_START_STATES "1"
 #define SPACE " "
 
 
@@ -126,7 +127,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
     header_nfa_desc.append(LINE_BREAK);;
     header_nfa_desc.append(OPEN_CURLY_BRACKET);
 
-    ofstream generated_nfa_desc_file("/home/hassingard/Desktop/example3.txt");
+    ofstream generated_nfa_desc_file("/home/hassingard/Desktop/example3.txt");//TODO: Change the path for property file or input parameter
 
 
 
@@ -154,7 +155,9 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
 
     header_nfa_desc.append("# Estados iniciales");
     header_nfa_desc.append(LINE_BREAK);
-    header_nfa_desc.append(START_STATE);
+    header_nfa_desc.append(NUMBER_OF_START_STATES);
+    header_nfa_desc.append(SPACE);
+    header_nfa_desc.append(START_STATE); //Start State is always 1
     header_nfa_desc.append(LINE_BREAK);
 
 
@@ -225,6 +228,7 @@ string RandomNFAGenerator::get_final_states_int_rep(int pos_n) const
 {
     std::string nfa_states_list;
     dynamic_bitset<> final_states_current_nfa_bit_stream = this->getGenerated_NFAs_final_states().at(pos_n);
+    int number_of_final_states = 0;
 
     for (int i = 0; i < getStates(); i ++)
     {
@@ -234,8 +238,12 @@ string RandomNFAGenerator::get_final_states_int_rep(int pos_n) const
 
             nfa_states_list += std::to_string(i + 1);
             nfa_states_list += SPACE;
+            number_of_final_states += 1;
         }
     }
+
+    nfa_states_list.insert(0,std::to_string(number_of_final_states));
+    nfa_states_list.insert(1, SPACE);
 
     return nfa_states_list;
 }
