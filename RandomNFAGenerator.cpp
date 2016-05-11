@@ -127,8 +127,9 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
     header_nfa_desc.append("# Alfabeto");
     header_nfa_desc.append(LINE_BREAK);;
     header_nfa_desc.append(OPEN_CURLY_BRACKET);
+    std::string generated_nfa_file_path = "/home/hassingard/Desktop/example3.auto";
 
-    ofstream generated_nfa_desc_file("/home/hassingard/Desktop/example3.txt");//TODO: Change the path for property file or input parameter
+    ofstream generated_nfa_desc_file(generated_nfa_file_path);//TODO: Change the path for property file or input parameter
 
 
 
@@ -227,7 +228,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
 
     }
 
-    std::cout << "Generation done" << std::endl;
+    std::cout << "NFAs generated at: " << generated_nfa_file_path << std::endl;
     generated_nfa_desc_file.close();
 }
 
@@ -239,13 +240,13 @@ unsigned int RandomNFAGenerator::getNfa_stream_size() const
 }
 
 
-string RandomNFAGenerator::get_final_states_int_rep(int pos_n) const
+string RandomNFAGenerator::get_final_states_int_rep(unsigned pos_n) const
 {
     std::string nfa_states_list;
     dynamic_bitset<> final_states_current_nfa_bit_stream = this->getGenerated_NFAs_final_states().at(pos_n);
     int number_of_final_states = 0;
 
-    for (int i = 0; i < getStates(); i ++)
+    for (unsigned i = 0; i < getStates(); i ++)
     {
 
         if (final_states_current_nfa_bit_stream.test(i))
