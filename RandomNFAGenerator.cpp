@@ -192,7 +192,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
                 for (size_t k = 0; k < size_of_alphabet; k++)
                 {
 
-                    std::cout << "nfa_bit_stream_index:" << nfa_bit_stream_index << std::endl;
+                    //std::cout << "nfa_bit_stream_index:" << nfa_bit_stream_index << std::endl;
                     if (current_nfa.test(nfa_bit_stream_index))
                     {
                         /*
@@ -227,6 +227,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
 
     }
 
+    std::cout << "Generation done" << std::endl;
     generated_nfa_desc_file.close();
 }
 
