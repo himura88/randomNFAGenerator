@@ -13,8 +13,6 @@
 #define NUMBER_OF_START_STATES "1"
 #define SPACE " "
 
-
-
 RandomNFAGenerator::RandomNFAGenerator()
 {
     this->generator = new StreamGenerator();
@@ -38,8 +36,8 @@ std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomN
     unsigned nfa_bit_stream_size = getAlphabet() * (getStates() * getStates());
     for (int i = 0; i <= getNumber_of_NFAs() - 1; i++)
     {
-        dynamic_bitset<> currentNFA = generator->generateBitStream(nfa_bit_stream_size);
-        dynamic_bitset<> finalStates = generator->generateBitStream(getStates());
+        dynamic_bitset<> currentNFA = generator->generateBitStream(nfa_bit_stream_size, 1);//replace magic number
+        dynamic_bitset<> finalStates = generator->generateBitStream(getStates(), 0);//replace magic number
 
         this->generated_NFAs.push_back(currentNFA);
         this->generated_NFAs_final_states.push_back(finalStates);
@@ -127,8 +125,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
     header_nfa_desc.append(LINE_BREAK);;
     header_nfa_desc.append(OPEN_CURLY_BRACKET);
 
-    ofstream generated_nfa_desc_file("/home/hassingard/Desktop/example3.txt");//TODO: Change the path for property file or input parameter
-
+    ofstream generated_nfa_desc_file("/home/himura88/Desktop/nfa25test-50.txt");//TODO: Change the path for property file or input parameter
 
 
     size_t nfa_bit_stream_index = 0; //index used in the iteration of each bitstream.
@@ -188,7 +185,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
                 for (size_t k = 0; k < size_of_alphabet; k++)
                 {
 
-                    std::cout << "nfa_bit_stream_index:" << nfa_bit_stream_index << std::endl;
+                    //std::cout << "nfa_bit_stream_index:" << nfa_bit_stream_index << std::endl;
                     if (current_nfa.test(nfa_bit_stream_index))
                     {
                         /*
