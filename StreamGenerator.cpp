@@ -22,14 +22,9 @@ StreamGenerator::StreamGenerator()
 {
     this->streamSize = 0;
     this->defaultBitStream = new dynamic_bitset<>(streamSize);
+    this->seed = std::chrono::system_clock::now().time_since_epoch().count();
+    this->generator.seed(this ->seed);
 }
-
-StreamGenerator::StreamGenerator(int streamSize)
-{
-    this->streamSize = streamSize;
-    this->defaultBitStream = new dynamic_bitset<>(streamSize);
-}
-
 
 dynamic_bitset<> StreamGenerator::generateBitStream(int size, int generator_flag)
 {
@@ -43,12 +38,10 @@ dynamic_bitset<> StreamGenerator::generateBitStream(int size, int generator_flag
     unsigned int iterations = (ceil(size / sizeOfInteger));
     unsigned int startIndex = 0;
 
+   // std::default_random_engine generator(seed);
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator(seed);
     std::uniform_int_distribution<unsigned int> distribution(0, UINT_MAX);
 
-    ofstream generated_test_values;
 
 
     for (int i = 0; i <= iterations; i++)
@@ -57,11 +50,11 @@ dynamic_bitset<> StreamGenerator::generateBitStream(int size, int generator_flag
         unsigned int tempRandomInt = distribution(generator);
         if (generator_flag == 0)
         {
-            this->random_int_final_states.push_back(tempRandomInt);
+            random_int_final_states.push_back(tempRandomInt);
         }
         else
         {
-            this->random_int_nfa.push_back(tempRandomInt);
+            random_int_nfa.push_back(tempRandomInt);
         }
 
         setBitstreamBits(randomBitStream, tempRandomInt, startIndex, 0);

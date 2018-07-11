@@ -34,6 +34,10 @@ std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomN
 {
 
     unsigned nfa_bit_stream_size = getAlphabet() * (getStates() * getStates());
+    this->generated_NFAs.reserve(getNumber_of_NFAs());
+    this->generated_NFAs_final_states.reserve(getNumber_of_NFAs());
+
+
     for (int i = 0; i <= getNumber_of_NFAs() - 1; i++)
     {
         dynamic_bitset<> currentNFA = generator->generateBitStream(nfa_bit_stream_size, 1);//replace magic number

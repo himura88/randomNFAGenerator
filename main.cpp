@@ -39,16 +39,18 @@ int main(int argc, char *argv[])
 
     ofstream final_states_ints("/home/himura88/final_states_ints.txt");
     ofstream random_nfa_ints("/home/himura88/random_nfa_ints.txt");
+    vector<int> final_states_ints_vector = stream_generator->getRandom_int_final_states();
+    vector<int> nfa_ints_vector = stream_generator->getRandom_int_nfa();
 
-    for (int i = 0; i < stream_generator->getRandom_int_final_states().size(); i++)
+    for (int i = 0; i < final_states_ints_vector.size(); i++)
     {
-        final_states_ints << stream_generator->getRandom_int_nfa().at(i) << LINE_BREAK;
+        final_states_ints << final_states_ints_vector.at(i) << LINE_BREAK;
 
     }
 
-    for (int i = 0; i < stream_generator->getRandom_int_nfa().size(); i++)
+    for (int i = 0; i < nfa_ints_vector.size(); i++)
     {
-        random_nfa_ints << stream_generator->getRandom_int_nfa().at(i) << LINE_BREAK;
+        random_nfa_ints << nfa_ints_vector.at(i) << LINE_BREAK;
     }
 
     final_states_ints.close();

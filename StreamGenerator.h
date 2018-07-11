@@ -31,14 +31,14 @@ private:
     dynamic_bitset<> *defaultBitStream;
     vector<int> random_int_final_states;
     vector<int> random_int_nfa;
+    unsigned int seed;
+    std::default_random_engine generator;
 
 
 public:
 
 
     int getStreamSize() const;
-
-    StreamGenerator(int streamSize);
 
     void setStreamSize(int streamSize);
 
@@ -55,9 +55,7 @@ public:
 //option 1, using a method with no return type to fill the string vector that contains the bit representation of the generated random number in each position
     dynamic_bitset<> generateBitStream(int size, int generator_flag);
 
-    void setBitstreamBits(dynamic_bitset<> &bitStream, int num,
-                          size_t bitsetIndex,
-                          size_t numIndex);
+    void setBitstreamBits(dynamic_bitset<> &bitStream, int num, size_t bitsetIndex, size_t numIndex);
 
     dynamic_bitset<> *getDefaultBitStream() const;
 
