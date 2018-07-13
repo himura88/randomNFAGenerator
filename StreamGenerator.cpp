@@ -24,6 +24,7 @@ StreamGenerator::StreamGenerator()
     this->defaultBitStream = new dynamic_bitset<>(streamSize);
     this->seed = std::chrono::system_clock::now().time_since_epoch().count();
     this->generator.seed(this ->seed);
+  //  this->distribution(0, UINT_MAX);
 }
 
 dynamic_bitset<> StreamGenerator::generateBitStream(int size, int generator_flag)
@@ -40,7 +41,8 @@ dynamic_bitset<> StreamGenerator::generateBitStream(int size, int generator_flag
 
    // std::default_random_engine generator(seed);
 
-    std::uniform_int_distribution<unsigned int> distribution(0, UINT_MAX);
+  //  std::uniform_int_distribution<unsigned int> distribution(0, UINT_MAX);
+    //distribution.uniform_int_distribution(0,UINT_MAX);
 
 
 
@@ -65,9 +67,10 @@ dynamic_bitset<> StreamGenerator::generateBitStream(int size, int generator_flag
 
 }
 
-void StreamGenerator::setBitstreamBits(dynamic_bitset<> &bitStream, int num, size_t bitsetIndex, size_t numIndex)
+void StreamGenerator::setBitstreamBits(dynamic_bitset<> &bitStream, unsigned int num, size_t bitsetIndex, size_t numIndex)
 {
 
+    unsigned int current_num = num;
     unsigned int size = sizeof(unsigned int) * 8;
     if (numIndex < size)
     {
