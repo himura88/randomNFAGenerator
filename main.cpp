@@ -3,12 +3,12 @@
 #include <fstream>
 #include "StreamGenerator.h"
 #include "RandomNFAGenerator.h"
-#include <boost/date_time/posix_time/posix_time_io.hpp>
+
 
 #define LINE_BREAK "\n"
 
 using namespace std;
-using namespace boost::posix_time;
+
 
 int main(int argc, char *argv[])
 {
@@ -34,21 +34,26 @@ int main(int argc, char *argv[])
 
     automata_generator->write_generated_NFAs(automata_generator->getGenerated_NFAs());
 
-    time_facet *facet = new time_facet("%d-%b-%Y %H-%M-%S");
+    string generated_ints_file_path = "/home/himura88/";
 
 
-    ofstream final_states_ints("/home/himura88/final_states_ints.txt");
-    ofstream random_nfa_ints("/home/himura88/random_nfa_ints.txt");
-    vector<int> final_states_ints_vector = stream_generator->getRandom_int_final_states();
-    vector<int> nfa_ints_vector = stream_generator->getRandom_int_nfa();
+    ofstream final_states_ints(
+            generated_ints_file_path + "final_states_ints_input" + std::to_string(alphabet) + std::to_string(states) +
+            std::to_string(numberOfNFAs) + ".txt");
+    ofstream random_nfa_ints(
+            generated_ints_file_path + "random_nfa_ints_input" + std::to_string(alphabet) + std::to_string(states) +
+            std::to_string(numberOfNFAs) + ".txt");
 
-    for (int i = 0; i < final_states_ints_vector.size(); i++)
+    vector<unsigned long> final_states_ints_vector = stream_generator->getRandom_int_final_states();
+    vector<unsigned long> nfa_ints_vector = stream_generator->getRandom_int_nfa();
+
+    for (unsigned long i = 0; i < final_states_ints_vector.size(); i++)
     {
         final_states_ints << final_states_ints_vector.at(i) << LINE_BREAK;
 
     }
 
-    for (int i = 0; i < nfa_ints_vector.size(); i++)
+    for (unsigned long i = 0; i < nfa_ints_vector.size(); i++)
     {
         random_nfa_ints << nfa_ints_vector.at(i) << LINE_BREAK;
     }

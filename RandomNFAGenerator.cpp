@@ -4,7 +4,9 @@
 
 #include <fstream>
 #include <sstream>
+#include <chrono>
 #include "RandomNFAGenerator.h"
+
 #define DEFAULT_COMMA ","
 #define OPEN_CURLY_BRACKET "{"
 #define CLOSE_CURLY_BRACKET "}"
@@ -21,6 +23,7 @@ RandomNFAGenerator::RandomNFAGenerator()
 RandomNFAGenerator::RandomNFAGenerator(const RandomNFAGenerator &orig)
 {
 }
+
 //Class default constructor
 RandomNFAGenerator::~RandomNFAGenerator()
 {
@@ -49,7 +52,6 @@ std::vector<boost::dynamic_bitset<>> &RandomNFAGenerator::generateUniformRandomN
     }
     return generated_NFAs;
 }
-
 
 
 const vector<dynamic_bitset<>> &RandomNFAGenerator::getGenerated_NFAs() const
@@ -129,7 +131,13 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
     header_nfa_desc.append(LINE_BREAK);;
     header_nfa_desc.append(OPEN_CURLY_BRACKET);
 
-    ofstream generated_nfa_desc_file("/home/himura88/Desktop/nfa25test-50.txt");//TODO: Change the path for property file or input parameter
+    string generated_nfa_path = "/home/himura88/";
+
+
+
+    ofstream generated_nfa_desc_file(generated_nfa_path + "generated-nfas-" + std::to_string(this->alphabet) + "-" +
+                                     std::to_string(this->states) + "-" + std::to_string(this->number_of_NFAs) +
+                                    "-" + ".txt");//TODO: Change the path for property file or input parameter
 
 
     size_t nfa_bit_stream_index = 0; //index used in the iteration of each bitstream.
@@ -145,7 +153,7 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
         header_nfa_desc.append(DEFAULT_COMMA);
     }
 
-    header_nfa_desc.erase(header_nfa_desc.size()-1);
+    header_nfa_desc.erase(header_nfa_desc.size() - 1);
     header_nfa_desc.append(CLOSE_CURLY_BRACKET);
     header_nfa_desc.append(LINE_BREAK);
     header_nfa_desc.append("# Numero de estados");
@@ -221,17 +229,17 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
 unsigned int RandomNFAGenerator::getNfa_stream_size() const
 {
 
-   return getAlphabet()*(getStates()*getStates());
+    return getAlphabet() * (getStates() * getStates());
 }
 
 
-string RandomNFAGenerator::get_final_states_int_rep(int pos_n) const
+string RandomNFAGenerator::get_final_states_int_rep(unsigned long pos_n) const
 {
     std::string nfa_states_list;
     dynamic_bitset<> final_states_current_nfa_bit_stream = this->getGenerated_NFAs_final_states().at(pos_n);
     int number_of_final_states = 0;
 
-    for (int i = 0; i < getStates(); i ++)
+    for (unsigned long i = 0; i < getStates(); i++)
     {
 
         if (final_states_current_nfa_bit_stream.test(i))
@@ -243,7 +251,7 @@ string RandomNFAGenerator::get_final_states_int_rep(int pos_n) const
         }
     }
 
-    nfa_states_list.insert(0,std::to_string(number_of_final_states));
+    nfa_states_list.insert(0, std::to_string(number_of_final_states));
     nfa_states_list.insert(1, SPACE);
 
     return nfa_states_list;

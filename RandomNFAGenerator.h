@@ -65,7 +65,7 @@ public:
 
     unsigned int getNfa_stream_size() const;
 
-    std::string  get_final_states_int_rep(int pos_n) const;
+    std::string  get_final_states_int_rep(unsigned long pos_n) const;
 
 };
 

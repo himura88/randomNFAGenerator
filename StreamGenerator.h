@@ -27,39 +27,28 @@ class StreamGenerator
 
 private:
 
-    int streamSize;
-    dynamic_bitset<> *defaultBitStream;
-    vector<int> random_int_final_states;
-    vector<int> random_int_nfa;
-    unsigned int seed;
+    unsigned long streamSize;
+    vector<unsigned long> random_int_final_states;
+    vector<unsigned long> random_int_nfa;
+    unsigned long seed;
     std::default_random_engine generator;
     std::uniform_int_distribution<unsigned int> distribution{0, UINT_MAX};
 
 public:
 
 
-    int getStreamSize() const;
+    vector<unsigned long> getRandom_int_final_states() const;
 
-    void setStreamSize(int streamSize);
-
-    const vector<int> &getRandom_int_final_states() const;
-
-    const vector<int> &getRandom_int_nfa() const;
-
-    StreamGenerator(int streamSize, dynamic_bitset<> *defaultBitStream); //param constructor
+    vector<unsigned long> getRandom_int_nfa() const;
 
     StreamGenerator(const StreamGenerator &orig);
 
     StreamGenerator();
 
 //option 1, using a method with no return type to fill the string vector that contains the bit representation of the generated random number in each position
-    dynamic_bitset<> generateBitStream(int size, int generator_flag);
+    dynamic_bitset<> generateBitStream(unsigned long size, int generator_flag);
 
     void setBitstreamBits(dynamic_bitset<> &bitStream, unsigned int num, size_t bitsetIndex, size_t numIndex);
-
-    dynamic_bitset<> *getDefaultBitStream() const;
-
-    void setDefaultBitStream(dynamic_bitset<> *defaultBitStream);
 
 
 };

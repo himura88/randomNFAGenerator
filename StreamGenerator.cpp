@@ -12,22 +12,17 @@
 #define LINE_BREAK "\n"
 using namespace std;
 
-StreamGenerator::StreamGenerator(int size, dynamic_bitset<> *defaultBitStream)
-{
-    this->streamSize = size;
-    this->defaultBitStream = defaultBitStream;
-}
 
 StreamGenerator::StreamGenerator()
 {
     this->streamSize = 0;
-    this->defaultBitStream = new dynamic_bitset<>(streamSize);
-    this->seed = std::chrono::system_clock::now().time_since_epoch().count();
+    new dynamic_bitset<>(streamSize);
+    this->seed = (unsigned long) std::chrono::system_clock::now().time_since_epoch().count();
     this->generator.seed(this ->seed);
   //  this->distribution(0, UINT_MAX);
 }
 
-dynamic_bitset<> StreamGenerator::generateBitStream(int size, int generator_flag)
+dynamic_bitset<> StreamGenerator::generateBitStream(unsigned long size, int generator_flag)
 {
 // generator_flag = 1 -> generating nfa; generator_flag = 2 -> generating final states
     dynamic_bitset<> randomBitStream(size);
@@ -36,15 +31,8 @@ dynamic_bitset<> StreamGenerator::generateBitStream(int size, int generator_flag
     //Using sizeof(int)*8 will give the exact number of bits of an integer
     //depending on the platform in which the program is running. 
     unsigned int sizeOfInteger = sizeof(int) * 8;
-    unsigned int iterations = (ceil(size / sizeOfInteger));
+    unsigned int iterations = (unsigned int) ceil(size / sizeOfInteger);
     unsigned int startIndex = 0;
-
-   // std::default_random_engine generator(seed);
-
-  //  std::uniform_int_distribution<unsigned int> distribution(0, UINT_MAX);
-    //distribution.uniform_int_distribution(0,UINT_MAX);
-
-
 
     for (int i = 0; i <= iterations; i++)
     {
@@ -70,7 +58,6 @@ dynamic_bitset<> StreamGenerator::generateBitStream(int size, int generator_flag
 void StreamGenerator::setBitstreamBits(dynamic_bitset<> &bitStream, unsigned int num, size_t bitsetIndex, size_t numIndex)
 {
 
-    unsigned int current_num = num;
     unsigned int size = sizeof(unsigned int) * 8;
     if (numIndex < size)
     {
@@ -86,32 +73,17 @@ void StreamGenerator::setBitstreamBits(dynamic_bitset<> &bitStream, unsigned int
 }
 
 
-int StreamGenerator::getStreamSize() const
-{
-    return streamSize;
-}
-
-dynamic_bitset<> *StreamGenerator::getDefaultBitStream() const
-{
-    return defaultBitStream;
-}
-
-void StreamGenerator::setDefaultBitStream(dynamic_bitset<> *defaultBitStream)
-{
-    StreamGenerator::defaultBitStream = defaultBitStream;
-}
-
-void StreamGenerator::setStreamSize(int streamSize)
-{
-    StreamGenerator::streamSize = streamSize;
-}
-
-const vector<int> &StreamGenerator::getRandom_int_final_states() const
+vector<unsigned long> StreamGenerator::getRandom_int_final_states() const
 {
     return random_int_final_states;
 }
 
-const vector<int> &StreamGenerator::getRandom_int_nfa() const
+vector<unsigned long> StreamGenerator::getRandom_int_nfa() const
 {
     return random_int_nfa;
+}
+
+StreamGenerator::StreamGenerator(const StreamGenerator &orig)
+{
+
 }
