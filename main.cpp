@@ -20,6 +20,15 @@ void write_bistream_file (vector<boost::dynamic_bitset<>> stream_vector, ofstrea
     file_stream.close();
 }
 
+void write_generated_ints_file (vector<unsigned long> number_vector, ofstream &file_stream)
+{
+    for (size_t i = 0; i < number_vector.size(); i++)
+    {
+        file_stream << number_vector.at(i) << LINE_BREAK;
+
+    }
+    file_stream.close();
+}
 
 int main(int argc, char *argv[])
 {
@@ -58,23 +67,19 @@ int main(int argc, char *argv[])
     vector<boost::dynamic_bitset<>> generated_NFAs_final_states = automata_generator->getGenerated_NFAs_final_states();
 
     //writing the generated numbers for final states into a file
-    ofstream final_states_ints(
+    ofstream final_states_ints_file(
             generated_final_states_ints_file_path + "final-states-ints-input" + std::to_string(alphabet) + std::to_string(states) +
             std::to_string(numberOfNFAs) + ".txt");
-    for (unsigned long i = 0; i < final_states_ints_vector.size(); i++)
-    {
-        final_states_ints << final_states_ints_vector.at(i) << LINE_BREAK;
 
-    }
+    write_generated_ints_file(final_states_ints_vector, final_states_ints_file);
+
 
     //writing the generated numbers used to construct the nfa bitstreams into a file
-    ofstream random_nfa_ints(
+    ofstream random_nfa_ints_file(
             generated_nfa_ints_file_path + "random-nfa-ints-input" + std::to_string(alphabet) + std::to_string(states) +
             std::to_string(numberOfNFAs) + ".txt");
-    for (unsigned long i = 0; i < nfa_ints_vector.size(); i++)
-    {
-        random_nfa_ints << nfa_ints_vector.at(i) << LINE_BREAK;
-    }
+    write_generated_ints_file(nfa_ints_vector, random_nfa_ints_file);
+
 
     //writing the generated nfa bit streams into a file
     ofstream random_nfa_bitstream(
@@ -83,32 +88,14 @@ int main(int argc, char *argv[])
             std::to_string(numberOfNFAs) + ".txt");
 
     write_bistream_file(generated_NFAs, random_nfa_bitstream );
-  //  size_t nfa_vector_size = generated_NFAs.size() - 1;
-   /* for (size_t i = 0; i < nfa_vector_size; i++)
-    {
-        string current_bitstream;
-        boost::to_string(generated_NFAs.at(i), current_bitstream);
-        random_nfa_bitstream << current_bitstream << LINE_BREAK;
 
-    }*/
 
     //writing the generated bit streams for final states of nfa's into a file
     ofstream random_nfa_final_states(
             generated_final_states_bitstreams_filepath + "generated-final-states-bitstreams-" + std::to_string(alphabet) + "-" +
             std::to_string(states) + "-" +
             std::to_string(numberOfNFAs) + ".txt");
+    write_bistream_file(generated_NFAs_final_states, random_nfa_final_states);
 
-    for (size_t i = 0; i < generated_NFAs_final_states.size() -1 ; i++)
-    {
-        string current_bitstream;
-        boost::to_string(generated_NFAs_final_states.at(i), current_bitstream);
-        random_nfa_bitstream << current_bitstream << LINE_BREAK;
-    }
-
-
-    final_states_ints.close();
-    random_nfa_ints.close();
-    random_nfa_bitstream.close();
-    random_nfa_final_states.close();
     return 0;
 }
