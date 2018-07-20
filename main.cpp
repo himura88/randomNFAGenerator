@@ -15,7 +15,17 @@ void write_bistream_file (vector<boost::dynamic_bitset<>> stream_vector, ofstrea
     {
         string current_bitstream;
         boost::to_string(stream_vector.at(i), current_bitstream);
-        file_stream << current_bitstream << LINE_BREAK;
+        size_t str_size = current_bitstream.size();
+
+        string csv_string = "";
+        for (size_t j = 0; j < str_size; j++)
+        {
+            csv_string = csv_string + current_bitstream.at(j);
+            csv_string = csv_string + ",";
+        }
+        csv_string.erase(str_size - 1);
+
+        file_stream << csv_string << LINE_BREAK;
     }
     file_stream.close();
 }
