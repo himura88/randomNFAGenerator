@@ -7,9 +7,8 @@
 
 #include "StreamGenerator.h"
 #include <chrono>
-#include <fstream>
 
-#define LINE_BREAK "\n"
+#define LINE_BREAK "\r\n"
 using namespace std;
 
 

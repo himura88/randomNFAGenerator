@@ -10,7 +10,7 @@
 #define DEFAULT_COMMA ","
 #define OPEN_CURLY_BRACKET "{"
 #define CLOSE_CURLY_BRACKET "}"
-#define LINE_BREAK "\n"
+#define LINE_BREAK "\r\n"
 #define START_STATE "1"
 #define NUMBER_OF_START_STATES "1"
 #define SPACE " "
@@ -131,11 +131,11 @@ void RandomNFAGenerator::write_generated_NFAs(vector<boost::dynamic_bitset<>> ge
     header_nfa_desc.append(LINE_BREAK);;
     header_nfa_desc.append(OPEN_CURLY_BRACKET);
 
-    string generated_nfa_path = "/home/himura88/";
+    string generated_nfa_desc_path = "/home/himura88/generatednfas/desc/";
 
 
 
-    ofstream generated_nfa_desc_file(generated_nfa_path + "generated-nfas-" + std::to_string(this->alphabet) + "-" +
+    ofstream generated_nfa_desc_file(generated_nfa_desc_path + "generated-nfa-desc-" + std::to_string(this->alphabet) + "-" +
                                      std::to_string(this->states) + "-" + std::to_string(this->number_of_NFAs) +
                                     "-" + ".txt");//TODO: Change the path for property file or input parameter
 

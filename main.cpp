@@ -5,7 +5,7 @@
 #include "RandomNFAGenerator.h"
 
 
-#define LINE_BREAK "\n"
+#define LINE_BREAK "\r\n"
 
 using namespace std;
 
